@@ -36,7 +36,7 @@ class ETHTicker:
 				color = "white"
 		percentage = "{:,.1%}".format(priceeth1hrchange)
 		currency = "{:,.2f}".format(priceeth)
-		text1 = "ETH Price: $" + str(currency) + " (" + str(percentage) + ")"
+		text1 = "ETH Price: $" + str(currency) + "   (" + str(percentage) + ")"
 		down_label = Label(text=(text1),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = color)
 		down_label.grid(row=3, column=1, sticky=W)
    
@@ -93,10 +93,10 @@ class ETHTicker:
 		text12 = "BTC locked: " + str(currency)
 		percentage = "{:,.1%}".format(priceyfi1hrchange)
 		currency = "${:,.2f}".format(priceyfi)
-		text13 = "Price YFI: " + str(currency) + " (" + str(percentage) + ")"
+		text13 = "Price YFI: " + str(currency) + "   (" + str(percentage) + ")"
 		currency = "${:,.2f}".format(priceuni)
 		percentage = "{:,.1%}".format(priceuni1hrchange)
-		text14 = "Price UNI: " + str(currency) + " (" + str(percentage) + ")"
+		text14 = "Price UNI: " + str(currency) + "   (" + str(percentage) + ")"
 		down_label = Label(text=(text12 + '\n' + text13 + '\n' + text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=12, column=1, sticky=W)
 		
