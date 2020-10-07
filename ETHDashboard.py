@@ -8,7 +8,7 @@ from urllib.request import urlopen
 from json import loads
 
 #display tresholds (change color if x value increased more than y%). 
-disppriceeth1hrchangediff = 2    # checked once / hr
+disppriceeth1hrchangediff = 1    # checked once / hr
 dispmarketcap24h = 2          # checked once / day
 
 class ETHTicker:

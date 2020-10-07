@@ -1,5 +1,5 @@
 # ETH Dashboard
-The dashboard is an up-to-date tracking of your key ETH and Defi indicators. Instead of having to use apps like Blockfolio or websites, you use this code that runs on a Pi with a LCD display. The dashboard includes:<br>
+The dashboard is an up-to-date tracking of your key ETH and Defi indicators. Instead of having to use apps like Blockfolio or websites, you use this code that runs on a Pi with a LCD display. You inmediately see if something happens without haven to wait for a notification from your app. The dashboard includes:<br>
 <li> Market: Price, 24hr change and MarketCap, Dominance
 <li> Blockchain: average time and fees
 <li> Key DeFi indicators. Including BTC locked :-)
