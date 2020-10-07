@@ -25,7 +25,7 @@ class ETHTicker:
 
 		hwg()
 		title = "Market Data"
-		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='#454A75', fg='gold')
+		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
 		down_label.grid(row=2, column=1, sticky=W)
 
 		if priceeth1hrchange * 100 > disppriceeth1hrchangediff:
@@ -34,20 +34,21 @@ class ETHTicker:
 				color = "lightcoral"
 		else:
 				color = "white"
+		percentage = "{:,.1%}".format(priceeth1hrchange)
 		currency = "{:,.2f}".format(priceeth)
-		text1 = "ETH Price: $" + str(currency)
-		down_label = Label(text=(text1),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = color)
+		text1 = "ETH Price: $" + str(currency) + " (" + str(percentage) + ")"
+		down_label = Label(text=(text1),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = color)
 		down_label.grid(row=3, column=1, sticky=W)
    
 
 		currency = "{:,.2%}".format(priceeth24hrchange)
 		text2 = "24hr change: " + str(currency)
-		down_label = Label(text=(text2),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = "white")
+		down_label = Label(text=(text2),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = "white")
 		down_label.grid(row=4, column=1, sticky=W)
 
 		currency = "{:,.2%}".format(market_dominance_percentage)
 		text3 = "ETH Dominance: " + str(currency)
-		down_label = Label(text=(text3),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = 'white')
+		down_label = Label(text=(text3),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
 		down_label.grid(row=5, column=1, sticky=W)
 
 		if marketcap24h > dispmarketcap24h:
@@ -58,48 +59,50 @@ class ETHTicker:
 				color = "white"
 		currency = "{:,.0f}".format(marketcapeth)
 		text4 = "Marketcap: $" + str(currency)
-		down_label = Label(text=(text4 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = color)
+		down_label = Label(text=(text4 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = color)
 		down_label.grid(row=6, column=1, sticky=W)
 
 		title = "Blockchain Data"
-		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='#454A75', fg='gold')
+		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
 		down_label.grid(row=7, column=1, sticky=W)
 
 		currency = "{:,.0f}".format(average_gasfee)
 		text5 = "Average Gas: " + str(currency) + " gwei"
 		date_time_obj = "{:,.1f}".format(average_wait_time)
 		text5b = "Avg Wait time: " + str(date_time_obj) + " min"
-		down_label = Label(text=(text5 + '\n' + text5b),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
+		down_label = Label(text=(text5 + '\n' + text5b),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=8, column=1, sticky=W)
 
 		date_time_obj =  "{:,.2f}".format(average_block_time)
 		text5a = "Avg Block time: " + str(date_time_obj) + " sec"
-		down_label = Label(text=(text5a + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
+		down_label = Label(text=(text5a + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=9, column=1, sticky=W)
 
 		title = "DeFi"
-		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='#454A75', fg='gold')
+		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
 		down_label.grid(row=10, column=1, sticky=W)
 
 		currency = "${:,.1f}".format(defilockedusd)
 		text10 = "Value locked: " + str(currency) + " B"
 		currency = "${:,.1f}".format(dominance_valueusd)  + " B"
 		text11 = str(dominance_name) + " " + str(currency)
-		down_label = Label(text=(text10 + '\n' + text11),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
+		down_label = Label(text=(text10 + '\n' + text11),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=11, column=1, sticky=W)
 
 		currency = "{:,.0f}".format(TVLBTC)
 		text12 = "BTC locked: " + str(currency)
+		percentage = "{:,.1%}".format(priceyfi1hrchange)
 		currency = "${:,.2f}".format(priceyfi)
-		text13 = "Price YFI: " + str(currency)
+		text13 = "Price YFI: " + str(currency) + " (" + str(percentage) + ")"
 		currency = "${:,.2f}".format(priceuni)
-		text14 = "Price UNI: " + str(currency)
-		down_label = Label(text=(text12 + '\n' + text13 + '\n' + text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
+		percentage = "{:,.1%}".format(priceuni1hrchange)
+		text14 = "Price UNI: " + str(currency) + " (" + str(percentage) + ")"
+		down_label = Label(text=(text12 + '\n' + text13 + '\n' + text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=12, column=1, sticky=W)
 		
 		now = datetime.datetime.now()
 		text99 = "Current time: " + str(now)
-		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='#454A75', fg='white')
+		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')
 		down_label.grid(row=14, column=1, sticky=W)
 	
 # This is where you set the update time. 290000 is about 5 minutes	
@@ -127,6 +130,8 @@ def hwg():
 	global TVLBTC
 	global average_block_time
 	global average_wait_time
+	global priceyfi1hrchange
+	global priceuni1hrchange
 
 	fearindex = " "
 	fearindexvalue = 0
@@ -207,11 +212,15 @@ def hwg():
 		priceeth = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
 		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/yearn-finance').read()	
 		priceyfi = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
+		priceyfi1hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_1h_in_currency']['usd'])
 		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/uniswap').read()	
 		priceuni = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
+		priceuni1hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_1h_in_currency']['usd'])
 
 		priceeth24hrchange = priceeth24hrchange / 100
 		priceeth1hrchange = priceeth1hrchange / 100
+		priceuni1hrchange = priceuni1hrchange / 100
+		priceyfi1hrchange = priceyfi1hrchange / 100
 		print(priceeth)
 
 	except:
@@ -222,7 +231,7 @@ def hwg():
 onlyonce = 0
 then = datetime.datetime.now()
 root = Tk()
-root.configure(cursor='none', bg='#454A75')
+root.configure(cursor='none', bg='black')
 root.attributes('-fullscreen', True)
 logo = PhotoImage(file=r"ethlogo.png")
 ethlogo = logo.subsample(26,26)
