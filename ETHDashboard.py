@@ -28,9 +28,9 @@ class ETHTicker:
 		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
 		down_label.grid(row=2, column=1, sticky=W)
 
-		if priceeth1hrchange * 100 > disppriceeth1hrchangediff:
+		if priceeth1hrchange > disppriceeth1hrchangediff:
 				color = "lightgreen"
-		elif priceeth1hrchange * 100 < disppriceeth1hrchangediff * -1:
+		elif priceeth1hrchange < disppriceeth1hrchangediff * -1:
 				color = "lightcoral"
 		else:
 				color = "white"
