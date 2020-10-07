@@ -47,11 +47,10 @@ class ETHTicker:
 		text2 = "24hr change: " + str(currency)
 		down_label = Label(text=(text2),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = "white")
 		down_label.grid(row=4, column=1, sticky=W)
+
 		currency = "{:,.2%}".format(market_dominance_percentage)
-		text2a = "ETH Dominance: " + str(currency)
-		currency = "{:,.0f}".format(xxxx)
-		text3 = "Sats per $: " + str(currency)
-		down_label = Label(text=(text2a + '\n'+  text3),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = 'white')
+		text3 = "ETH Dominance: " + str(currency)
+		down_label = Label(text=(text3),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = 'white')
 		down_label.grid(row=5, column=1, sticky=W)
 
 		if marketcap24h > dispmarketcap24h:
@@ -65,28 +64,21 @@ class ETHTicker:
 		down_label = Label(text=(text4 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = color)
 		down_label.grid(row=6, column=1, sticky=W)
 
-average_gasfee
-average_block_time
-average_wait_time
-dominancepercentage
-defilockedusd
-dominance_name
-
 
 		title = "Blockchain Data"
 		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='#454A75', fg='gold')
 		down_label.grid(row=7, column=1, sticky=W)
 
-		currency = "{:,.0f}".format(xxxx)
-		text5 = "Hashrate 24hr: " + str(currency) + " EH/s"
-		down_label = Label(text=(text5),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg=color)
+		currency = "{:,.2f}".format(average_gasfee)
+		text5 = "Average Gas: " + str(currency) + " gwei"
+		date_time_obj = "{:,.2f}".format(average_wait_time)
+		text5b = "Avg Wait time: " + str(date_time_obj)
+		down_label = Label(text=(text5 + '\n' + text5b),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg=color)
 		down_label.grid(row=8, column=1, sticky=W)
 
-		currency = "{:,.02%}".format(xxxx)
-		text5a = "Next difficulty estimate: " + str(currency)
-		date_time_obj = datetime.datetime.strptime(xxxx time, '%Y-%m-%d %H:%M:%S')
-		text5b = "Next adjustment: " + str(date_time_obj.date()) #.strftime("%Y-%m-%d %H:%M")
-		down_label = Label(text=(text5a + '\n' + text5b),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
+		date_time_obj =  "{:,.2f}".format(average_block_time)
+		text5a = "Avg Block time: " + str(date_time_obj)
+		down_label = Label(text=(text5a),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
 		down_label.grid(row=9, column=1, sticky=W)
 
 		currency = "{:,.0f}".format(xxxx)
@@ -107,7 +99,7 @@ dominance_name
 				color = "white"
 		currency = "${:,.2f}".format(average_transaction_fee_usd_24h)
 		text8 = "Average Fee: " + str(currency)
-		currency = "{:,.0f}".format(suggested_transaction_fee)
+		currency = "{:,.0f}".format(xxxx)
 		down_label = Label(text=(text8),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg=color)
 		down_label.grid(row=12, column=1, sticky=W)
 
@@ -120,8 +112,10 @@ dominance_name
 		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='#454A75', fg='gold')
 		down_label.grid(row=14, column=1, sticky=W)
 
-		text10 = "Fear & Greed Index: " + str(fearindex)
-		text11 = "Fear Value: " + str(fearindexvalue)
+		currency = "${:,.2f}".format(defilockedusd)
+		text10 = "DeFi locked: " + str(currency)
+		currency = "{:,.2%}".format(dominancepercentage)
+		text11 = "iiii" + str(dominance_name) + " " + str(currency)
 		down_label = Label(text=(text10 + '\n' + text11 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
 		down_label.grid(row=15, column=1, sticky=W)
 		
@@ -165,6 +159,9 @@ def hwg():
 	global dominancepercentage
 	global defilockedusd
 	global dominance_name
+	global average_gasfee
+	global average_block_time
+	global average_wait_time
 
 	fearindex = " "
 	fearindexvalue = 0
@@ -174,15 +171,14 @@ def hwg():
 	marketcapeth = 0
 	marketcap24h = 0
 	market_dominance_percentage = 0
-	suggested_transaction_fee = 0
 	average_transaction_fee_usd_24h = 0
 
 	try:
-#	get the defipulse data
-		defipuls_api_request = urlopen('https://data-api.defipulse.com/api/v1/defipulse/api/MarketData').read()
-		defilockedusd = float(loads(defipuls_api_request)['All']['total'])
-		dominance_valueusd = float(loads(defipuls_api_request)['All']['dominance_value'])
-		dominance_name = str(loads(defipuls_api_request)['All']['dominance_name'])
+#	get the defipulse data 
+		marketdata=requests.get('https://data-api.defipulse.com/api/v1/defipulse/api/MarketData?api-key=e61b012ae1c05cd4f84bd87c86826ec28f2fde511db9e73fddf9a0a510d0').json()
+		defilockedusd=marketdata['All']['total']
+		dominance_valueusd = marketdata['All']['dominance_value']
+		dominance_name = str(marketdata['All']['dominance_name'])
 		dominancepercentage = dominance_valueusd / defilockedusd
 	except:
 		print("Error reading DeFiPulse")
@@ -200,10 +196,10 @@ def hwg():
 
 	try:
 #	https://docs.ethgasstation.info/gas-price
-		ethgasstation_api_request = urlopen('https://ethgasstation.info/api/ethgasAPI.json?').read()
-		average_gasfee = float(loads(ethgasstation_api_request)['average'])
-		average_block_time = float(loads(ethgasstation_api_request)['block_time'])
-		average_wait_time = float(loads(ethgasstation_api_request)['avgWait'])
+		marketdata = requests.get('https://ethgasstation.info/api/ethgasAPI.json?').json()
+		average_gasfee = marketdata['average']
+		average_block_time = marketdata['block_time']
+		average_wait_time = marketdata['avgWait']
 
 		average_gasfee = average_gasfee / 10
 
