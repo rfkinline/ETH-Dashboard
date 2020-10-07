@@ -8,8 +8,8 @@ from urllib.request import urlopen
 from json import loads
 
 #display tresholds (change color if x value increased more than y%). 
-disppriceeth1hrchangediff = 1    # checked once / hr
-dispmarketcap24h = 2          # checked once / day
+price1hrchangediff = 1    # checked once / hr
+price24hrchangediff = 1    # checked once / hr
 
 class ETHTicker:
 	def __init__(self, master):
@@ -28,15 +28,16 @@ class ETHTicker:
 		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
 		down_label.grid(row=2, column=1, sticky=W)
 
-		if priceeth1hrchange *100 > disppriceeth1hrchangediff:
+		if priceeth1hrchange *100 > price1hrchangediff:
 				color = "lightgreen"
-		elif priceeth1hrchange * 100 < disppriceeth1hrchangediff * -1:
+		elif priceeth1hrchange * 100 < price1hrchangediff * -1:
 				color = "lightcoral"
 		else:
 				color = "white"
 		percentage = "{:,.1%}".format(priceeth1hrchange)
+		percentage2 = "{:,.1%}".format(priceeth24hrchange)
 		currency = "{:,.2f}".format(priceeth)
-		text1 = "ETH Price: $" + str(currency) + "   (" + str(percentage) + ")"
+		text1 = "ETH Price: " + str(currency) + "   (" + str(percentage) + " / " + str(percentage2) + ")"
 		down_label = Label(text=(text1),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = color)
 		down_label.grid(row=3, column=1, sticky=W)
    
@@ -51,15 +52,9 @@ class ETHTicker:
 		down_label = Label(text=(text3),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
 		down_label.grid(row=5, column=1, sticky=W)
 
-		if marketcap24h > dispmarketcap24h:
-				color = "lightgreen"
-		elif marketcap24h < dispmarketcap24h * -1:
-				color = "lightcoral"
-		else:
-				color = "white"
 		currency = "{:,.0f}".format(marketcapeth)
 		text4 = "Marketcap: $" + str(currency)
-		down_label = Label(text=(text4 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = color)
+		down_label = Label(text=(text4 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
 		down_label.grid(row=6, column=1, sticky=W)
 
 		title = "Blockchain Data"
@@ -94,27 +89,29 @@ class ETHTicker:
 		down_label = Label(text=(text12),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=12, column=1, sticky=W)
 		
-		if priceyfi1hrchange * 100 > disppriceeth1hrchangediff:
+		if priceyfi1hrchange * 100 > price1hrchangediff:
 				color = "lightgreen"
-		elif priceyfi1hrchange * 100 < disppriceeth1hrchangediff * -1:
+		elif priceyfi1hrchange * 100 < price1hrchangediff * -1:
 				color = "lightcoral"
 		else:
 				color = "white"		
 		percentage = "{:,.1%}".format(priceyfi1hrchange)
-		currency = "${:,.2f}".format(priceyfi)
-		text13 = "Price YFI: " + str(currency) + "   (" + str(percentage) + ")"
+		percentage2 = "{:,.1%}".format(priceyfi24hrchange)
+		currency = "${:,.0f}".format(priceyfi)
+		text13 = "Price YFI: " + str(currency) + " (" + str(percentage) + " / " + str(percentage2) + ")"
 		down_label = Label(text=(text13),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
 		down_label.grid(row=13, column=1, sticky=W)
 
-		if priceuni1hrchange * 100 > disppriceeth1hrchangediff:
+		if priceuni1hrchange * 100 > price1hrchangediff:
 				color = "lightgreen"
-		elif priceuni1hrchange * 100 < disppriceeth1hrchangediff * -1:
+		elif priceuni1hrchange * 100 < price1hrchangediff * -1:
 				color = "lightcoral"
 		else:
 				color = "white"		
 		currency = "${:,.2f}".format(priceuni)
 		percentage = "{:,.1%}".format(priceuni1hrchange)
-		text14 = "Price UNI: " + str(currency) + "   (" + str(percentage) + ")"
+		percentage2 = "{:,.1%}".format(priceuni24hrchange)
+		text14 = "Price UNI: " + str(currency) + "  (" + str(percentage) + " / " + str(percentage2) + ")"
 		down_label = Label(text=(text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
 		down_label.grid(row=14, column=1, sticky=W)
 		
@@ -136,6 +133,8 @@ def hwg():
 	global priceeth
 	global priceeth1hrchange
 	global priceeth24hrchange
+	global priceyfi24hrchange
+	global priceuni24hrchange
 	global marketcapeth
 	global marketcap24h
 	global priceyfi
@@ -230,12 +229,16 @@ def hwg():
 		priceeth = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
 		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/yearn-finance').read()	
 		priceyfi = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
+		priceyfi24hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_24h'])
 		priceyfi1hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_1h_in_currency']['usd'])
 		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/uniswap').read()	
 		priceuni = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
 		priceuni1hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_1h_in_currency']['usd'])
+		priceuni24hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_24h'])
 
 		priceeth24hrchange = priceeth24hrchange / 100
+		priceuni24hrchange = priceuni24hrchange / 100
+		priceyfi24hrchange = priceyfi24hrchange / 100
 		priceeth1hrchange = priceeth1hrchange / 100
 		priceuni1hrchange = priceuni1hrchange / 100
 		priceyfi1hrchange = priceyfi1hrchange / 100
