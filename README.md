@@ -5,7 +5,7 @@ The dashboard is an up-to-date tracking of your key ETH and Defi indicators. Ins
 <li> Key DeFi indicators. Including BTC locked :-)
 <li> Colors: red or green when the change is over 5%. Currently implemented in: Marketcap and Price
 
-<img src="https://i.ibb.co/nsZsrcG/IMG-20201005-125918.jpg" width="300" alt="IMG-20200930-072821" border="1"><br>
+<img src="https://i.ibb.co/v3Kk5Jr/IMG-20201007-104650.jpg" width="300" alt="IMG-20200930-072821" border="1"><br>
 
 ## Hardware
 <li>Standard Raspberry Pi 3 or 4
