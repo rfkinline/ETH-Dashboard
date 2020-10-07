@@ -10,21 +10,18 @@ from json import loads
 #display tresholds (change color if x value increased more than y%). 
 disppriceeth1hrchangediff = 2    # checked once / hr
 dispmarketcap24h = 2          # checked once / day
-dispaverage_transaction_fee_usd_24hdiff = 10      # checked every 5 minutes
 
 class ETHTicker:
 	def __init__(self, master):
 		self.master = master
 		self.close_button = Button(image=ethlogo, command=self.close)
 		self.close_button.grid(row=0, column=0)
-		self.label = Label(master, text=("ETH Dashboard"), font=('Helvetica',32, 'bold'), fg='black', bg = 'gold')
+		self.label = Label(master, text=("ETH Dashboard"), font=('Helvetica',32, 'bold'), width=17, anchor='center', fg='black', bg = 'white')
 		self.label.grid(row=0, column=1)
 
 	def labels():
 		global then
 		global onlyonce
-		global average_transaction_fee_usd_24hsav
-		global average_transaction_fee_usd_24hdiff
 
 		hwg()
 		title = "Market Data"
@@ -64,81 +61,47 @@ class ETHTicker:
 		down_label = Label(text=(text4 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg = color)
 		down_label.grid(row=6, column=1, sticky=W)
 
-
 		title = "Blockchain Data"
 		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='#454A75', fg='gold')
 		down_label.grid(row=7, column=1, sticky=W)
 
-		currency = "{:,.2f}".format(average_gasfee)
+		currency = "{:,.0f}".format(average_gasfee)
 		text5 = "Average Gas: " + str(currency) + " gwei"
-		date_time_obj = "{:,.2f}".format(average_wait_time)
-		text5b = "Avg Wait time: " + str(date_time_obj)
-		down_label = Label(text=(text5 + '\n' + text5b),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg=color)
+		date_time_obj = "{:,.1f}".format(average_wait_time)
+		text5b = "Avg Wait time: " + str(date_time_obj) + " min"
+		down_label = Label(text=(text5 + '\n' + text5b),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
 		down_label.grid(row=8, column=1, sticky=W)
 
 		date_time_obj =  "{:,.2f}".format(average_block_time)
-		text5a = "Avg Block time: " + str(date_time_obj)
-		down_label = Label(text=(text5a),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
+		text5a = "Avg Block time: " + str(date_time_obj) + " sec"
+		down_label = Label(text=(text5a + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
 		down_label.grid(row=9, column=1, sticky=W)
 
-		currency = "{:,.0f}".format(xxxx)
-		text6 = "Mempool: " + str(currency) + " transactions   "
-		down_label = Label(text=(text6),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg=color)
+		title = "DeFi"
+		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='#454A75', fg='gold')
 		down_label.grid(row=10, column=1, sticky=W)
 
-		currency = "{:,.0f}".format(xxxx)
-		text7 = "Last block: " + str(currency)
-		down_label = Label(text=(text7),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
+		currency = "${:,.1f}".format(defilockedusd)
+		text10 = "Value locked: " + str(currency) + " B"
+		currency = "${:,.1f}".format(dominance_valueusd)  + " B"
+		text11 = str(dominance_name) + " " + str(currency)
+		down_label = Label(text=(text10 + '\n' + text11),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
 		down_label.grid(row=11, column=1, sticky=W)
 
-		if average_transaction_fee_usd_24hdiff > dispaverage_transaction_fee_usd_24hdiff:
-				color = "lightcoral"
-		elif average_transaction_fee_usd_24hdiff < dispaverage_transaction_fee_usd_24hdiff * -1:
-				color = "lightgreen"
-		else:
-				color = "white"
-		currency = "${:,.2f}".format(average_transaction_fee_usd_24h)
-		text8 = "Average Fee: " + str(currency)
-		currency = "{:,.0f}".format(xxxx)
-		down_label = Label(text=(text8),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg=color)
+		currency = "{:,.0f}".format(TVLBTC)
+		text12 = "BTC locked: " + str(currency)
+		currency = "${:,.2f}".format(priceyfi)
+		text13 = "Price YFI: " + str(currency)
+		currency = "${:,.2f}".format(priceuni)
+		text14 = "Price UNI: " + str(currency)
+		down_label = Label(text=(text12 + '\n' + text13 + '\n' + text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
 		down_label.grid(row=12, column=1, sticky=W)
-
-
-		text8a = "Recommended Fee: " + str(currency) + " sat/vB  "
-		down_label = Label(text=(text8a + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
-		down_label.grid(row=13, column=1, sticky=W)
-
-		title = "Others"
-		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='#454A75', fg='gold')
-		down_label.grid(row=14, column=1, sticky=W)
-
-		currency = "${:,.2f}".format(defilockedusd)
-		text10 = "DeFi locked: " + str(currency)
-		currency = "{:,.2%}".format(dominancepercentage)
-		text11 = "iiii" + str(dominance_name) + " " + str(currency)
-		down_label = Label(text=(text10 + '\n' + text11 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='#454A75', fg='white')
-		down_label.grid(row=15, column=1, sticky=W)
 		
 		now = datetime.datetime.now()
-		duration = now - then
-		duration_in_s = duration.total_seconds()
-#		print(duration_in_s)
 		text99 = "Current time: " + str(now)
 		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='#454A75', fg='white')
-		down_label.grid(row=18, column=1, sticky=W)
-
-# first time
-		if onlyonce == 0:
-			average_transaction_fee_usd_24hsav = average_transaction_fee_usd_24h
-			onlyonce = 1
-
-# to calculated the hourly differences
-		if duration_in_s > 300:
-			average_transaction_fee_usd_24hdiff = average_transaction_fee_usd_24h - average_transaction_fee_usd_24hsav
-			average_transaction_fee_usd_24hdiff = average_transaction_fee_usd_24hdiff / average_transaction_fee_usd_24hsav * 100
-			average_transaction_fee_usd_24hsav = average_transaction_fee_usd_24h
-			then = datetime.datetime.now()
-		
+		down_label.grid(row=14, column=1, sticky=W)
+	
 # This is where you set the update time. 290000 is about 5 minutes	
 		down_label.after(290000,ETHTicker.labels)
 
@@ -154,12 +117,14 @@ def hwg():
 	global priceeth24hrchange
 	global marketcapeth
 	global marketcap24h
+	global priceyfi
+	global priceuni
 	global market_dominance_percentage
-	global average_transaction_fee_usd_24h
-	global dominancepercentage
+	global average_gasfee
 	global defilockedusd
 	global dominance_name
-	global average_gasfee
+	global dominance_valueusd
+	global TVLBTC
 	global average_block_time
 	global average_wait_time
 
@@ -171,7 +136,7 @@ def hwg():
 	marketcapeth = 0
 	marketcap24h = 0
 	market_dominance_percentage = 0
-	average_transaction_fee_usd_24h = 0
+	average_gasfee = 0
 
 	try:
 #	get the defipulse data 
@@ -179,7 +144,20 @@ def hwg():
 		defilockedusd=marketdata['All']['total']
 		dominance_valueusd = marketdata['All']['dominance_value']
 		dominance_name = str(marketdata['All']['dominance_name'])
-		dominancepercentage = dominance_valueusd / defilockedusd
+
+		defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/GetProjects?api-key=e61b012ae1c05cd4f84bd87c86826ec28f2fde511db9e73fddf9a0a510d0'
+		total_value_locked = requests.get(defi_pulse_url)
+		json_obj = total_value_locked.json()
+
+		for project in json_obj:
+			name = project.get("name")
+			if name == 'WBTC':
+				WBTC = project['value']['tvl']['BTC'].get("value")
+			elif name == 'RenVM':
+				RENBTC = project['value']['tvl']['BTC'].get("value")
+		TVLBTC = WBTC + RENBTC
+		dominance_valueusd = dominance_valueusd / 1000000000
+		defilockedusd = defilockedusd / 1000000000
 	except:
 		print("Error reading DeFiPulse")
 		time.sleep(10)
@@ -207,6 +185,18 @@ def hwg():
 		print("Error reading Ethgasstation.info")
 		time.sleep(10)
 		hwg()
+
+	try:
+#	get blockchain data https://blockchair.com/api/docs#link_M03
+		blockchair_api_request = urlopen('https://api.blockchair.com/ethereum/stats').read()	
+		market_dominance_percentage = float(loads(blockchair_api_request)['data']['market_dominance_percentage'])
+
+		market_dominance_percentage = market_dominance_percentage / 100
+
+	except:
+		print("Error reading Blockchair")
+		time.sleep(10)
+		hwg()
 	
 	try:
 		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/ethereum').read()	
@@ -215,6 +205,11 @@ def hwg():
 		priceeth24hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_24h'])
 		marketcapeth = float(loads(coingecko_api_request)['market_data']['market_cap']['usd'])
 		priceeth = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
+		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/yearn-finance').read()	
+		priceyfi = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
+		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/uniswap').read()	
+		priceuni = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
+
 		priceeth24hrchange = priceeth24hrchange / 100
 		priceeth1hrchange = priceeth1hrchange / 100
 		print(priceeth)
@@ -224,15 +219,13 @@ def hwg():
 		time.sleep(10)
 		hwg()
 
-average_transaction_fee_usd_24hsav = 0 
-average_transaction_fee_usd_24hdiff = 0 
 onlyonce = 0
 then = datetime.datetime.now()
 root = Tk()
 root.configure(cursor='none', bg='#454A75')
 root.attributes('-fullscreen', True)
 logo = PhotoImage(file=r"ethlogo.png")
-ethlogo = logo.subsample(23,23)
+ethlogo = logo.subsample(26,26)
 my_gui = ETHTicker(root)
 ETHTicker.labels()
 root.mainloop()

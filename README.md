@@ -1,9 +1,8 @@
 # ETH Dashboard
-The dashboard is an up-to-date tracking of your key ETH indicators. Instead of having to use apps like Blockfolio or websites, you use this code that runs on a Pi with a LCD display. The dashboard includes:<br>
-<li> Market: Price, sats/USD and MarketCap, Dominance
-<li> Mempool: Transactions, blocks to clear
-<li> Blockchain: height and fees (sats/b and USD), hash-rate, next difficulty, date of next difficulty adjustment
-<li> Bitcoin Fear & Greed Index
+The dashboard is an up-to-date tracking of your key ETH and Defi indicators. Instead of having to use apps like Blockfolio or websites, you use this code that runs on a Pi with a LCD display. The dashboard includes:<br>
+<li> Market: Price, 24hr change and MarketCap, Dominance
+<li> Blockchain: average time and fees
+<li> Key DeFi indicators. Including BTC locked :-)
 <li> Colors: red or green when the change is over 5%. Currently implemented in: Marketcap and Price
 
 <img src="https://i.ibb.co/nsZsrcG/IMG-20201005-125918.jpg" width="300" alt="IMG-20200930-072821" border="1"><br>
@@ -14,12 +13,9 @@ The dashboard is an up-to-date tracking of your key ETH indicators. Instead of h
 <li>Don't use the default OS supplied by Raspberry. Follow the instructions described below (Install for Hyperpixel)
 
 ## What I am currently working on:
-1. include colors and maybe color grading
-2. Capacity Lightning Network
-3. GitHub stats
-4. Needs at least two other modes of this, like one to get your local breakout price and another as we approach/pass ATH
-5. Automatic screensaver (by time) to save display
-6. Automatic start with using variables (for example display switch off/on time)
+1. GitHub stats
+2. Automatic screensaver (by time) to save display
+3. Automatic start with using variables (for example display switch off/on time)
 
 ## Display
 <b>Install for HyperPixel 4.0 (3.5" display)</b><br>
