@@ -28,9 +28,9 @@ class ETHTicker:
 		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
 		down_label.grid(row=2, column=1, sticky=W)
 
-		if priceeth1hrchange > disppriceeth1hrchangediff:
+		if priceeth1hrchange *100 > disppriceeth1hrchangediff:
 				color = "lightgreen"
-		elif priceeth1hrchange < disppriceeth1hrchangediff * -1:
+		elif priceeth1hrchange * 100 < disppriceeth1hrchangediff * -1:
 				color = "lightcoral"
 		else:
 				color = "white"
@@ -91,19 +91,37 @@ class ETHTicker:
 
 		currency = "{:,.0f}".format(TVLBTC)
 		text12 = "BTC locked: " + str(currency)
+		down_label = Label(text=(text12),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
+		down_label.grid(row=12, column=1, sticky=W)
+		
+		if priceyfi1hrchange * 100 > disppriceeth1hrchangediff:
+				color = "lightgreen"
+		elif priceyfi1hrchange * 100 < disppriceeth1hrchangediff * -1:
+				color = "lightcoral"
+		else:
+				color = "white"		
 		percentage = "{:,.1%}".format(priceyfi1hrchange)
 		currency = "${:,.2f}".format(priceyfi)
 		text13 = "Price YFI: " + str(currency) + "   (" + str(percentage) + ")"
+		down_label = Label(text=(text13),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
+		down_label.grid(row=13, column=1, sticky=W)
+
+		if priceuni1hrchange * 100 > disppriceeth1hrchangediff:
+				color = "lightgreen"
+		elif priceuni1hrchange * 100 < disppriceeth1hrchangediff * -1:
+				color = "lightcoral"
+		else:
+				color = "white"		
 		currency = "${:,.2f}".format(priceuni)
 		percentage = "{:,.1%}".format(priceuni1hrchange)
 		text14 = "Price UNI: " + str(currency) + "   (" + str(percentage) + ")"
-		down_label = Label(text=(text12 + '\n' + text13 + '\n' + text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
-		down_label.grid(row=12, column=1, sticky=W)
+		down_label = Label(text=(text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
+		down_label.grid(row=14, column=1, sticky=W)
 		
 		now = datetime.datetime.now()
 		text99 = "Current time: " + str(now)
 		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')
-		down_label.grid(row=14, column=1, sticky=W)
+		down_label.grid(row=16, column=1, sticky=W)
 	
 # This is where you set the update time. 290000 is about 5 minutes	
 		down_label.after(290000,ETHTicker.labels)
