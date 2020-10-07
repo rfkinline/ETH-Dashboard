@@ -85,8 +85,10 @@ class ETHTicker:
 		down_label.grid(row=11, column=1, sticky=W)
 
 		currency = "{:,.0f}".format(TVLBTC)
-		text12 = "BTC locked: " + str(currency)
-		down_label = Label(text=(text12),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
+		text12 = "BTC locked: " + str(currency) + u'\u20bf'
+		currency = "{:,.0f}".format(LNDBTC)
+		text12a = "Lightning volume: " + str(currency) + u'\u20bf'
+		down_label = Label(text=(text12 + '\n' + text12a),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=12, column=1, sticky=W)
 		
 		if priceyfi1hrchange * 100 > price1hrchangediff:
@@ -100,7 +102,7 @@ class ETHTicker:
 		currency = "${:,.0f}".format(priceyfi)
 		text13 = "Price YFI: " + str(currency) + " (" + str(percentage) + " / " + str(percentage2) + ")"
 		down_label = Label(text=(text13),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
-		down_label.grid(row=13, column=1, sticky=W)
+		down_label.grid(row=14, column=1, sticky=W)
 
 		if priceuni1hrchange * 100 > price1hrchangediff:
 				color = "lightgreen"
@@ -113,12 +115,12 @@ class ETHTicker:
 		percentage2 = "{:,.1%}".format(priceuni24hrchange)
 		text14 = "Price UNI: " + str(currency) + "  (" + str(percentage) + " / " + str(percentage2) + ")"
 		down_label = Label(text=(text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
-		down_label.grid(row=14, column=1, sticky=W)
+		down_label.grid(row=15, column=1, sticky=W)
 		
 		now = datetime.datetime.now()
 		text99 = "Current time: " + str(now)
 		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')
-		down_label.grid(row=16, column=1, sticky=W)
+		down_label.grid(row=17, column=1, sticky=W)
 	
 # This is where you set the update time. 290000 is about 5 minutes	
 		down_label.after(290000,ETHTicker.labels)
@@ -145,6 +147,7 @@ def hwg():
 	global dominance_name
 	global dominance_valueusd
 	global TVLBTC
+	global LNDBTC
 	global average_block_time
 	global average_wait_time
 	global priceyfi1hrchange
@@ -177,7 +180,9 @@ def hwg():
 				WBTC = project['value']['tvl']['BTC'].get("value")
 			elif name == 'RenVM':
 				RENBTC = project['value']['tvl']['BTC'].get("value")
-		TVLBTC = WBTC + RENBTC
+			elif name == 'Lightning Network':
+				LNDBTC = project['value']['tvl']['BTC'].get("value")
+		TVLBTC = WBTC + RENBTC + LNDBTC
 		dominance_valueusd = dominance_valueusd / 1000000000
 		defilockedusd = defilockedusd / 1000000000
 	except:

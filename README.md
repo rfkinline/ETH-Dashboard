@@ -2,10 +2,10 @@
 The dashboard is an up-to-date tracking of your key ETH and Defi indicators. Instead of having to use apps like Blockfolio or websites, you use this code that runs on a Pi with a LCD display. You inmediately see if something happens without haven to wait for a notification from your app. The dashboard includes:<br>
 <li> Market: Price, 1hr and 24hr change (in brackets) and MarketCap, Dominance
 <li> Blockchain: average time and fees
-<li> Key DeFi indicators. Including BTC locked :-)
+<li> Key DeFi indicators. Including BTC locked and Public Lighning Network volume :-)
 <li> Colors: red or green when the change in price per hour is over 1%. 
 
-<img src="https://i.ibb.co/ScKrd70/IMG-20201007-145849.jpg" width="300" alt="IMG-20200930-072821" border="1"><br>
+<img src="https://i.ibb.co/NsYwphX/IMG-20201007-183750.jpg" width="300" alt="IMG-20200930-072821" border="1"><br>
 
 ## Hardware
 <li>Standard Raspberry Pi 3 or 4
