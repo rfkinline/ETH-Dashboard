@@ -39,6 +39,9 @@ insert the following code at the end:<br>
 
 additional documentation: https://www.raspberrypi.org/documentation/linux/usage/cron.md
 
+## DefiPulse API Key
+To get the DefiPulse API working, you will need a key. It is free for up to 1000 calls per day. Here you can get an account: https://data-beta.defipulse.com/
+
 ## To stop the program
 To stop the program, click on the ETH logo. 
 

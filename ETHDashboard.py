@@ -6,6 +6,8 @@ import time
 import datetime
 from urllib.request import urlopen
 from json import loads
+# your defipulse API key. 
+defipulseApikey = "eb186b54317ca712f06413fbff21359c742e22ee11c181c692791e1d103a"
 
 #display tresholds (change color if x value increased more than y%). 
 price1hrchangediff = 1    # checked once / hr
@@ -100,7 +102,7 @@ class ETHTicker:
 		percentage = "{:,.1%}".format(priceyfi1hrchange)
 		percentage2 = "{:,.1%}".format(priceyfi24hrchange)
 		currency = "${:,.0f}".format(priceyfi)
-		text13 = "Price YFI: " + str(currency) + " (" + str(percentage) + " / " + str(percentage2) + ")"
+		text13 = "Price YFI: " + str(currency) + " (" + str(percentage) + " / " + str(percentage2) + ")  "
 		down_label = Label(text=(text13),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
 		down_label.grid(row=14, column=1, sticky=W)
 
@@ -113,7 +115,7 @@ class ETHTicker:
 		currency = "${:,.2f}".format(priceuni)
 		percentage = "{:,.1%}".format(priceuni1hrchange)
 		percentage2 = "{:,.1%}".format(priceuni24hrchange)
-		text14 = "Price UNI: " + str(currency) + "  (" + str(percentage) + " / " + str(percentage2) + ")"
+		text14 = "Price UNI: " + str(currency) + "  (" + str(percentage) + " / " + str(percentage2) + ")  "
 		down_label = Label(text=(text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
 		down_label.grid(row=15, column=1, sticky=W)
 		
@@ -130,8 +132,6 @@ class ETHTicker:
 
 def hwg():
 
-	global fearindex
-	global fearindexvalue
 	global priceeth
 	global priceeth1hrchange
 	global priceeth24hrchange
@@ -153,8 +153,6 @@ def hwg():
 	global priceyfi1hrchange
 	global priceuni1hrchange
 
-	fearindex = " "
-	fearindexvalue = 0
 	priceeth = 0
 	priceeth1hrchange = 0
 	priceeth24hrchange = 0
@@ -165,12 +163,12 @@ def hwg():
 
 	try:
 #	get the defipulse data 
-		marketdata=requests.get('https://data-api.defipulse.com/api/v1/defipulse/api/MarketData?api-key=e61b012ae1c05cd4f84bd87c86826ec28f2fde511db9e73fddf9a0a510d0').json()
+		marketdata=requests.get('https://data-api.defipulse.com/api/v1/defipulse/api/MarketData?api-key='+ defipulseApikey).json()
 		defilockedusd=marketdata['All']['total']
 		dominance_valueusd = marketdata['All']['dominance_value']
 		dominance_name = str(marketdata['All']['dominance_name'])
 
-		defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/GetProjects?api-key=e61b012ae1c05cd4f84bd87c86826ec28f2fde511db9e73fddf9a0a510d0'
+		defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/GetProjects?api-key='+ defipulseApikey
 		total_value_locked = requests.get(defi_pulse_url)
 		json_obj = total_value_locked.json()
 
@@ -190,14 +188,6 @@ def hwg():
 		time.sleep(10)
 		hwg()
 
-	try:
-#	get the fearindex
-		fearindex = str(loads(urlopen('https://api.alternative.me/fng/').read())['data'][0]['value_classification'])
-		fearindexvalue = str(loads(urlopen('https://api.alternative.me/fng/').read())['data'][0]['value'])
-	except:
-		print("Error reading Fearindex")
-		time.sleep(10)
-		hwg()
 
 	try:
 #	https://docs.ethgasstation.info/gas-price
