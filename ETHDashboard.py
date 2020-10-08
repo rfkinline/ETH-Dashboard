@@ -7,7 +7,7 @@ import datetime
 from urllib.request import urlopen
 from json import loads
 # your defipulse API key. 
-defipulseApikey = "eb186b54317ca712f06413fbff21359c742e22ee11c181c692791e1d103"
+defipulseApikey = "eb186b54317ca712f06413fbff21359c742e22ee11c181c692791e1d103a"
 
 #display tresholds (change color if x value increased more than y%). 
 price1hrchangediff = 1    # checked once / hr
@@ -42,57 +42,7 @@ class ETHTicker:
 		text1 = "ETH Price: " + str(currency) + "   (" + str(percentage) + " / " + str(percentage2) + ")"
 		down_label = Label(text=(text1),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = color)
 		down_label.grid(row=3, column=1, sticky=W)
-   
 
-		currency = "{:,.2%}".format(priceeth24hrchange)
-		text2 = "24hr change: " + str(currency)
-		down_label = Label(text=(text2),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = "white")
-		down_label.grid(row=4, column=1, sticky=W)
-
-		currency = "{:,.2%}".format(market_dominance_percentage)
-		text3 = "ETH Dominance: " + str(currency)
-		down_label = Label(text=(text3),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
-		down_label.grid(row=5, column=1, sticky=W)
-
-		currency = "{:,.0f}".format(marketcapeth)
-		text4 = "Marketcap: $" + str(currency)
-		down_label = Label(text=(text4 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
-		down_label.grid(row=6, column=1, sticky=W)
-
-		title = "Blockchain Data"
-		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
-		down_label.grid(row=7, column=1, sticky=W)
-
-		currency = "{:,.0f}".format(average_gasfee)
-		text5 = "Average Gas: " + str(currency) + " gwei"
-		date_time_obj = "{:,.1f}".format(average_wait_time)
-		text5b = "Avg Wait time: " + str(date_time_obj) + " min"
-		down_label = Label(text=(text5 + '\n' + text5b),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
-		down_label.grid(row=8, column=1, sticky=W)
-
-		date_time_obj =  "{:,.2f}".format(average_block_time)
-		text5a = "Avg Block time: " + str(date_time_obj) + " sec"
-		down_label = Label(text=(text5a + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
-		down_label.grid(row=9, column=1, sticky=W)
-
-		title = "DeFi"
-		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
-		down_label.grid(row=10, column=1, sticky=W)
-
-		currency = "${:,.1f}".format(defilockedusd)
-		text10 = "Value locked: " + str(currency) + " B"
-		currency = "${:,.1f}".format(dominance_valueusd)  + " B"
-		text11 = str(dominance_name) + " " + str(currency)
-		down_label = Label(text=(text10 + '\n' + text11),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
-		down_label.grid(row=11, column=1, sticky=W)
-
-		currency = "{:,.0f}".format(TVLBTC)
-		text12 = "BTC locked: " + str(currency) + u'\u20bf'
-		currency = "{:,.0f}".format(LNDBTC)
-		text12a = "Lightning volume: " + str(currency) + u'\u20bf'
-		down_label = Label(text=(text12 + '\n' + text12a),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
-		down_label.grid(row=12, column=1, sticky=W)
-		
 		if priceyfi1hrchange * 100 > price1hrchangediff:
 				color = "lightgreen"
 		elif priceyfi1hrchange * 100 < price1hrchangediff * -1:
@@ -102,9 +52,9 @@ class ETHTicker:
 		percentage = "{:,.1%}".format(priceyfi1hrchange)
 		percentage2 = "{:,.1%}".format(priceyfi24hrchange)
 		currency = "${:,.0f}".format(priceyfi)
-		text13 = "Price YFI: " + str(currency) + " (" + str(percentage) + " / " + str(percentage2) + ")  "
+		text13 = "YFI Price: " + str(currency) + " (" + str(percentage) + " / " + str(percentage2) + ")  "
 		down_label = Label(text=(text13),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
-		down_label.grid(row=14, column=1, sticky=W)
+		down_label.grid(row=4, column=1, sticky=W)
 
 		if priceuni1hrchange * 100 > price1hrchangediff:
 				color = "lightgreen"
@@ -115,10 +65,60 @@ class ETHTicker:
 		currency = "${:,.2f}".format(priceuni)
 		percentage = "{:,.1%}".format(priceuni1hrchange)
 		percentage2 = "{:,.1%}".format(priceuni24hrchange)
-		text14 = "Price UNI: " + str(currency) + "  (" + str(percentage) + " / " + str(percentage2) + ")  "
-		down_label = Label(text=(text14 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
-		down_label.grid(row=15, column=1, sticky=W)
-		
+		text14 = "UNI Price: " + str(currency) + "  (" + str(percentage) + " / " + str(percentage2) + ")  "
+		down_label = Label(text=(text14),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
+		down_label.grid(row=5, column=1, sticky=W)
+
+
+		currency = "{:,.2%}".format(priceeth24hrchange)
+		text2 = "24hr change: " + str(currency)
+		down_label = Label(text=(text2),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = "white")
+		down_label.grid(row=6, column=1, sticky=W)
+
+		currency = "{:,.2%}".format(market_dominance_percentage)
+		text3 = "ETH Dominance: " + str(currency)
+		down_label = Label(text=(text3),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
+		down_label.grid(row=7, column=1, sticky=W)
+
+		currency = "{:,.0f}".format(marketcapeth)
+		text4 = "Marketcap: $" + str(currency)
+		down_label = Label(text=(text4 + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
+		down_label.grid(row=8, column=1, sticky=W)
+
+		title = "Blockchain Data"
+		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
+		down_label.grid(row=9, column=1, sticky=W)
+
+		currency = "{:,.0f}".format(average_gasfee)
+		text5 = "Average Gas: " + str(currency) + " gwei  "
+		date_time_obj = "{:,.1f}".format(average_wait_time)
+		text5b = "Avg Wait time: " + str(date_time_obj) + " min  "
+		down_label = Label(text=(text5 + '\n' + text5b),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
+		down_label.grid(row=10, column=1, sticky=W)
+
+		date_time_obj =  "{:,.2f}".format(average_block_time)
+		text5a = "Avg Block time: " + str(date_time_obj) + " sec  "
+		down_label = Label(text=(text5a + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
+		down_label.grid(row=11, column=1, sticky=W)
+
+		title = "DeFi"
+		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
+		down_label.grid(row=12, column=1, sticky=W)
+
+		currency = "${:,.1f}".format(defilockedusd)
+		text10 = "Value locked: " + str(currency) + " B  "
+		currency = "${:,.1f}".format(dominance_valueusd)  + " B  "
+		text11 = str(dominance_name) + " locked: " + str(currency)
+		down_label = Label(text=(text10 + '\n' + text11),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
+		down_label.grid(row=13, column=1, sticky=W)
+
+		currency = "{:,.0f}".format(TVLBTC)
+		text12 = "BTC locked: " + str(currency) + u'\u20bf'
+		currency = "{:,.0f}".format(LNDBTC)
+		text12a = "Lightning volume: " + str(currency) + u'\u20bf'
+		down_label = Label(text=(text12 + '\n' + text12a + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
+		down_label.grid(row=14, column=1, sticky=W)
+					
 		now = datetime.datetime.now()
 		text99 = "Current time: " + str(now)
 		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')

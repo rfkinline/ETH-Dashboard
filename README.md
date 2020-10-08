@@ -16,6 +16,7 @@ The dashboard is an up-to-date tracking of your key ETH and Defi indicators. Ins
 1. GitHub stats
 2. Automatic screensaver (by time) to save display
 3. Automatic start with using variables (for example display switch off/on time)
+4. Indicators like: Dai CDPs or Maker collaterization?
 
 ## Display
 <b>Install for HyperPixel 4.0 (3.5" display)</b><br>
