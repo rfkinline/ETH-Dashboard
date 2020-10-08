@@ -11,8 +11,9 @@ defipulseApikey = "eb186b54317ca712f06413fbff21359c742e22ee11c181c692791e1d103a"
 
 #display tresholds (change color if x value increased more than y%). 
 price1hrchangediff = 1    # checked once / hr
-price24hrchangediff = 1    # checked once / hr
+price24hrchangediff = 5    # checked once / hr
 
+# this is where the display is being created
 class ETHTicker:
 	def __init__(self, master):
 		self.master = master
@@ -22,9 +23,6 @@ class ETHTicker:
 		self.label.grid(row=0, column=1)
 
 	def labels():
-		global then
-		global onlyonce
-
 		hwg()
 		title = "Market Data"
 		down_label = Label(text=(title),anchor=NW, justify=LEFT,font=('Helvetica', 28, 'bold'), bg='black', fg='gold')
@@ -244,8 +242,6 @@ def hwg():
 		time.sleep(10)
 		hwg()
 
-onlyonce = 0
-then = datetime.datetime.now()
 root = Tk()
 root.configure(cursor='none', bg='black')
 root.attributes('-fullscreen', True)
