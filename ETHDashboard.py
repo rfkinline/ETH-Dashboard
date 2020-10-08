@@ -7,7 +7,7 @@ import datetime
 from urllib.request import urlopen
 from json import loads
 # your defipulse API key. 
-defipulseApikey = "eb186b54317ca712f06413fbff21359c742e22ee11c181c692791e1d103a"
+defipulseApikey = "eb186b54317ca712f06413fbff21359c742e22ee11c181c692791e1d103"
 
 #display tresholds (change color if x value increased more than y%). 
 price1hrchangediff = 1    # checked once / hr
