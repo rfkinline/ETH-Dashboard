@@ -183,7 +183,7 @@ def hwg():
 		defilockedusd = defilockedusd / 1000000000
 	except:
 		print("Error reading DeFiPulse")
-		time.sleep(10)
+		time.sleep(5)
 		hwg()
 
 
