@@ -7,7 +7,7 @@ import datetime
 from urllib.request import urlopen
 from json import loads
 # your defipulse API key. 
-defipulseApikey = "eb186b54317ca712f06413fbff21359c742e22ee11c181c692791e1d103a"
+defipulseApikey = "e61b012ae1c05cd4f84bd87c86826ec28f2fde511db9e73fddf9a0a510d"
 
 #display tresholds (change color if x value increased more than y%). 
 price1hrchangediff = 1    # checked once / hr
@@ -182,7 +182,7 @@ def hwg():
 		dominance_valueusd = dominance_valueusd / 1000000000
 		defilockedusd = defilockedusd / 1000000000
 	except:
-		print("Error reading DeFiPulse")
+		print("Error DeFiPulse wrong or expired API key")
 		time.sleep(5)
 		hwg()
 
