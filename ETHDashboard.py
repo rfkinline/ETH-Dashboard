@@ -7,8 +7,8 @@ import datetime
 from urllib.request import urlopen
 from json import loads
 # your defipulse API key. 
-defipulseApikey = "e61b012ae1c05cd4f84bd87c86826ec28f2fde511db9e73fddf9a0a510d"
-
+defipulseApikey = "93c078480f89a7fa220f2b91a7244ea17b5bab77e3cff6b0fa1e2d0ed22c"
+#"e61b012ae1c05cd4f84bd87c86826ec28f2fde511db9e73fddf9a0a510d"
 #display tresholds (change color if x value increased more than y%). 
 price1hrchangediff = 1    # checked once / hr
 price24hrchangediff = 5    # checked once / hr
@@ -117,11 +117,14 @@ class ETHTicker:
 		down_label = Label(text=(text12 + '\n' + text12a + '\n'),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=14, column=1, sticky=W)
 					
-		now = datetime.datetime.now()
 		text98 = str(errormessage)
-		text99 = "Current time: " + str(now)
-		down_label = Label(text=(text98 + '\n' +text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')
+		down_label = Label(text=(text98),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='red')
 		down_label.grid(row=17, column=1, sticky=W)
+	
+		now = datetime.datetime.now()
+		text99 = "Current time: " + str(now)
+		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')
+		down_label.grid(row=18, column=1, sticky=W)
 	
 # This is where you set the update time. 290000 is about 5 minutes	
 		down_label.after(290000,ETHTicker.labels)
@@ -130,29 +133,27 @@ class ETHTicker:
 		root.destroy()
 
 def hwg():
-
-    global average_block_time
-    global average_gasfee
-    global average_wait_time
-    global defilockedusd
-    global dominance_name
-    global dominance_valueusd
-    global errormessage
-    global LNDBTC
-    global market_dominance_percentage
-    global marketcap24h
-    global marketcapeth
-    global priceeth
-    global priceeth1hrchange
-    global priceeth24hrchange
-    global priceuni
-    global priceuni1hrchange
-    global priceuni24hrchange
-    global priceyfi
-    global priceyfi1hrchange
-    global priceyfi24hrchange
-    global TVLBTC
-    global urltest
+	global priceeth
+	global priceeth1hrchange
+	global priceeth24hrchange
+	global priceyfi24hrchange
+	global priceuni24hrchange
+	global marketcapeth
+	global marketcap24h
+	global priceyfi
+	global priceuni
+	global market_dominance_percentage
+	global average_gasfee
+	global defilockedusd
+	global dominance_name
+	global dominance_valueusd
+	global TVLBTC
+	global LNDBTC
+	global status
+	global average_block_time
+	global average_wait_time
+	global priceyfi1hrchange
+	global priceuni1hrchange
 
 	priceeth = 0
 	priceeth1hrchange = 0
