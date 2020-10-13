@@ -161,31 +161,39 @@ def hwg():
 
 	try:
 #	get the defipulse data 
-		marketdata=requests.get('https://data-api.defipulse.com/api/v1/defipulse/api/MarketData?api-key='+ defipulseApikey).json()
-		defilockedusd=marketdata['All']['total']
-		dominance_valueusd = marketdata['All']['dominance_value']
-		dominance_name = str(marketdata['All']['dominance_name'])
+		defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/MarketData?api-key='+ defipulseApikey
+		r = requests.get(defi_pulse_url)
+		status = r.status_code
+		if status == 429:
+			print("Error DefiPulse. Wrong or expired API key")
+			raise
+		elif status == 200:
+			marketdata=requests.get(defi_pulse_url).json()
+			defilockedusd=marketdata['All']['total']
+			dominance_valueusd = marketdata['All']['dominance_value']
+			dominance_name = str(marketdata['All']['dominance_name'])
 
-		defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/GetProjects?api-key='+ defipulseApikey
-		total_value_locked = requests.get(defi_pulse_url)
-		json_obj = total_value_locked.json()
+			defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/GetProjects?api-key='+ defipulseApikey
+			total_value_locked = requests.get(defi_pulse_url)
+			json_obj = total_value_locked.json()
 
-		for project in json_obj:
-			name = project.get("name")
-			if name == 'WBTC':
-				WBTC = project['value']['tvl']['BTC'].get("value")
-			elif name == 'RenVM':
-				RENBTC = project['value']['tvl']['BTC'].get("value")
-			elif name == 'Lightning Network':
-				LNDBTC = project['value']['tvl']['BTC'].get("value")
-		TVLBTC = WBTC + RENBTC + LNDBTC
-		dominance_valueusd = dominance_valueusd / 1000000000
-		defilockedusd = defilockedusd / 1000000000
+			for project in json_obj:
+				name = project.get("name")
+				if name == 'WBTC':
+					WBTC = project['value']['tvl']['BTC'].get("value")
+				elif name == 'RenVM':
+					RENBTC = project['value']['tvl']['BTC'].get("value")
+				elif name == 'Lightning Network':
+					LNDBTC = project['value']['tvl']['BTC'].get("value")
+			TVLBTC = WBTC + RENBTC + LNDBTC
+			dominance_valueusd = dominance_valueusd / 1000000000
+			defilockedusd = defilockedusd / 1000000000
 	except:
-		print("Error DeFiPulse wrong or expired API key")
-		time.sleep(5)
-		hwg()
-
+		print("Error reading DeFiPulse. Error-code: " + str(status))
+		dominance_name = "Error reading DeFiPulse"
+		if r.status_code == 204:
+			time.sleep(5)
+			hwg()
 
 	try:
 #	https://docs.ethgasstation.info/gas-price
@@ -242,6 +250,13 @@ def hwg():
 		time.sleep(10)
 		hwg()
 
+LNDBTC=0
+TVLBTC=0
+defilockedusd=0
+dominance_valueusd=0
+dominance_name=0
+total_value_locked=0
+defilockedusd=0
 root = Tk()
 root.configure(cursor='none', bg='black')
 root.attributes('-fullscreen', True)
