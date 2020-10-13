@@ -118,8 +118,9 @@ class ETHTicker:
 		down_label.grid(row=14, column=1, sticky=W)
 					
 		now = datetime.datetime.now()
+		text98 = str(errormessage)
 		text99 = "Current time: " + str(now)
-		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')
+		down_label = Label(text=(text98 + '\n' +text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')
 		down_label.grid(row=17, column=1, sticky=W)
 	
 # This is where you set the update time. 290000 is about 5 minutes	
@@ -130,27 +131,28 @@ class ETHTicker:
 
 def hwg():
 
-	global priceeth
-	global priceeth1hrchange
-	global priceeth24hrchange
-	global priceyfi24hrchange
-	global priceuni24hrchange
-	global marketcapeth
-	global marketcap24h
-	global priceyfi
-	global priceuni
-	global market_dominance_percentage
-	global average_gasfee
-	global defilockedusd
-	global dominance_name
-	global dominance_valueusd
-	global TVLBTC
-	global LNDBTC
-	global urltest
-	global average_block_time
-	global average_wait_time
-	global priceyfi1hrchange
-	global priceuni1hrchange
+    global average_block_time
+    global average_gasfee
+    global average_wait_time
+    global defilockedusd
+    global dominance_name
+    global dominance_valueusd
+    global errormessage
+    global LNDBTC
+    global market_dominance_percentage
+    global marketcap24h
+    global marketcapeth
+    global priceeth
+    global priceeth1hrchange
+    global priceeth24hrchange
+    global priceuni
+    global priceuni1hrchange
+    global priceuni24hrchange
+    global priceyfi
+    global priceyfi1hrchange
+    global priceyfi24hrchange
+    global TVLBTC
+    global urltest
 
 	priceeth = 0
 	priceeth1hrchange = 0
@@ -183,7 +185,7 @@ def hwg():
 			TVLBTC = WBTC + RENBTC + LNDBTC
 	except:
 		print("Error reading DeFiPulse. Error-code: " + str(status))
-		dominance_name = "Error reading DeFiPulse Project"
+		errormessage = "Error reading DeFiPulse Project"
 		if status == 204:
 			time.sleep(5)
 			hwg()
@@ -205,7 +207,7 @@ def hwg():
 			defilockedusd = defilockedusd / 1000000000
 	except:
 		print("Error reading DeFiPulse. Error-code: " + str(status))
-		dominance_name = "Error reading DeFiPulse Market"
+		errormessage = "Error reading DeFiPulse Market"
 		if status == 204:
 			time.sleep(5)
 			hwg()
@@ -265,6 +267,7 @@ def hwg():
 		time.sleep(10)
 		hwg()
 
+errormessage=""
 LNDBTC=0
 TVLBTC=0
 defilockedusd=0
