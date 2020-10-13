@@ -146,6 +146,7 @@ def hwg():
 	global dominance_valueusd
 	global TVLBTC
 	global LNDBTC
+	global urltest
 	global average_block_time
 	global average_wait_time
 	global priceyfi1hrchange
@@ -160,20 +161,14 @@ def hwg():
 	average_gasfee = 0
 
 	try:
-#	get the defipulse data 
-		defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/MarketData?api-key='+ defipulseApikey
-		r = requests.get(defi_pulse_url)
-		status = r.status_code
+#	get the defipulse Project data 
+		defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/GetProjects?api-key='+ defipulseApikey
+		urltest = requests.get(defi_pulse_url)
+		status = urltest.status_code
 		if status == 429:
 			print("Error DefiPulse. Wrong or expired API key")
 			raise
 		elif status == 200:
-			marketdata=requests.get(defi_pulse_url).json()
-			defilockedusd=marketdata['All']['total']
-			dominance_valueusd = marketdata['All']['dominance_value']
-			dominance_name = str(marketdata['All']['dominance_name'])
-
-			defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/GetProjects?api-key='+ defipulseApikey
 			total_value_locked = requests.get(defi_pulse_url)
 			json_obj = total_value_locked.json()
 
@@ -186,12 +181,32 @@ def hwg():
 				elif name == 'Lightning Network':
 					LNDBTC = project['value']['tvl']['BTC'].get("value")
 			TVLBTC = WBTC + RENBTC + LNDBTC
+	except:
+		print("Error reading DeFiPulse. Error-code: " + str(status))
+		dominance_name = "Error reading DeFiPulse Project"
+		if status == 204:
+			time.sleep(5)
+			hwg()
+
+	try:
+#	get the defipulse Marketdata 
+		defi_pulse_url = 'https://data-api.defipulse.com/api/v1/defipulse/api/MarketData?api-key='+ defipulseApikey
+		urltest = requests.get(defi_pulse_url)
+		status = urltest.status_code
+		if status == 429:
+			print("Error DefiPulse. Wrong or expired API key")
+			raise
+		elif status == 200:
+			marketdata=requests.get(defi_pulse_url).json()
+			defilockedusd=marketdata['All']['total']
+			dominance_valueusd = marketdata['All']['dominance_value']
+			dominance_name = str(marketdata['All']['dominance_name'])
 			dominance_valueusd = dominance_valueusd / 1000000000
 			defilockedusd = defilockedusd / 1000000000
 	except:
 		print("Error reading DeFiPulse. Error-code: " + str(status))
-		dominance_name = "Error reading DeFiPulse"
-		if r.status_code == 204:
+		dominance_name = "Error reading DeFiPulse Market"
+		if status == 204:
 			time.sleep(5)
 			hwg()
 
