@@ -3,16 +3,10 @@ from tkinter import *
 import requests
 import sys
 import time
+exec(open(r"variables").read())
 import datetime
 from urllib.request import urlopen
 from json import loads
-
-# your defipulse API key. 
-defipulseApikey = "3c078480f89a7fa220f2b91a7244ea17b5bab77e3cff6b0fa1e2d0ed22c"
-
-#display tresholds (change color if x value increased more than y%). 
-price1hrchangediff = 1    # checked once / hr
-price24hrchangediff = 5    # checked once / hr
 
 # this is where the display is being created
 class ETHTicker:
