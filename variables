@@ -1,5 +1,14 @@
-# your defipulse API key. 
+# your defipulse API key. https://data-beta.defipulse.com/dashboard/egs
 defipulseApikey = "3c078480f89a7fa220f2b91a7244ea17b5bab77e3cff6b0fa1e2d0ed22c"
+#defipulseApikey = "eb186b54317ca712f06413fbff21359c742e22ee11c181c692791e1d103a"
+#defipulseApikey = "06f9063a11d3f6d69594c9304d074cde1f92f4dfe86b1668704da3a12cee"
+#defipulseApikey = "93c078480f89a7fa220f2b91a7244ea17b5bab77e3cff6b0fa1e2d0ed22c"
+#defipulseApikey = "74719cfc77511f9f1a709bc60d5f1c3d6383518a631e2a820bfbc88b7f00"
+#defipulseApikey = "7e586257575cab0b247acf0d2fddef28c0a9c537808cba24257a03c1ca3c"
+
+# Your 2 coins/tokens. Needs to match coingeckos names. For example: https://api.coingecko.com/api/v3/coins/uniswap
+ETHspecialcoin1 = "uniswap"
+ETHspecialcoin2 = "yearn-finance"
 
 #display tresholds (change color if x value increased more than y%). 
 price1hrchangediff = 1    # checked once / hr

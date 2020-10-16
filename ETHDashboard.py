@@ -3,7 +3,6 @@ from tkinter import *
 import requests
 import sys
 import time
-exec(open(r"variables").read())
 import datetime
 from urllib.request import urlopen
 from json import loads
@@ -18,6 +17,7 @@ class ETHTicker:
 		self.label.grid(row=0, column=1)
 
 	def labels():
+		global errormessage
 		hwg()
 		internet_on()
 		title = "Market Data"
@@ -37,29 +37,35 @@ class ETHTicker:
 		down_label = Label(text=(text1),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = color)
 		down_label.grid(row=3, column=1, sticky=W)
 
-		if priceyfi1hrchange * 100 > price1hrchangediff:
+		if coin1price1hrchange * 100 > price1hrchangediff:
 				color = "lightgreen"
-		elif priceyfi1hrchange * 100 < price1hrchangediff * -1:
+		elif coin1price1hrchange * 100 < price1hrchangediff * -1:
 				color = "lightcoral"
 		else:
 				color = "white"		
-		percentage = "{:,.1%}".format(priceyfi1hrchange)
-		percentage2 = "{:,.1%}".format(priceyfi24hrchange)
-		currency = "${:,.0f}".format(priceyfi)
-		text13 = "YFI Price: " + str(currency) + " (" + str(percentage) + " / " + str(percentage2) + ")  "
+		percentage = "{:,.1%}".format(coin1price1hrchange)
+		percentage2 = "{:,.1%}".format(coin1price24hrchange)
+		if coin1price > 10000:
+			currency = "${:,.0f}".format(coin1price)
+		else:
+			currency = "${:,.2f}".format(coin1price)
+		text13 = coin1symbol.upper() + " Price: " + str(currency) + " (" + str(percentage) + " / " + str(percentage2) + ")  "
 		down_label = Label(text=(text13),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
 		down_label.grid(row=4, column=1, sticky=W)
 
-		if priceuni1hrchange * 100 > price1hrchangediff:
+		if coin2price1hrchange * 100 > price1hrchangediff:
 				color = "lightgreen"
-		elif priceuni1hrchange * 100 < price1hrchangediff * -1:
+		elif coin2price1hrchange * 100 < price1hrchangediff * -1:
 				color = "lightcoral"
 		else:
 				color = "white"		
-		currency = "${:,.2f}".format(priceuni)
-		percentage = "{:,.1%}".format(priceuni1hrchange)
-		percentage2 = "{:,.1%}".format(priceuni24hrchange)
-		text14 = "UNI Price: " + str(currency) + "  (" + str(percentage) + " / " + str(percentage2) + ")  "
+		percentage = "{:,.1%}".format(coin2price1hrchange)
+		percentage2 = "{:,.1%}".format(coin2price24hrchange)
+		if coin2price > 10000:
+			currency = "${:,.0f}".format(coin2price)
+		else:
+			currency = "${:,.2f}".format(coin2price)
+		text14 = coin2symbol.upper() + " Price: " + str(currency) + "  (" + str(percentage) + " / " + str(percentage2) + ")  "
 		down_label = Label(text=(text14),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg=color)
 		down_label.grid(row=5, column=1, sticky=W)
 
@@ -68,9 +74,11 @@ class ETHTicker:
 		down_label = Label(text=(text3),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
 		down_label.grid(row=6, column=1, sticky=W)
 
-		currency = "{:,.0f}".format(marketcapeth)
-		text4 = "ETH Marketcap: $" + str(currency)
-		down_label = Label(text=(text4 + '\n' text4a),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
+		currency = "{:,.1f}".format(marketcapeth)
+		text4 = "ETH Marketcap: $" + str(currency) + " B  "
+		currency = "{:,.1f}".format(defi_market_cap)
+		text4a = "DeFi Marketcap: $" + str(currency) + " B  "
+		down_label = Label(text=(text4 + '\n' + text4a + '\n' ),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg = 'white')
 		down_label.grid(row=7, column=1, sticky=W)
 
 		title = "Blockchain Data"
@@ -95,8 +103,8 @@ class ETHTicker:
 
 		currency = "${:,.1f}".format(defilockedusd)
 		text10 = "Value locked: " + str(currency) + " B  "
-		currency = "${:,.1f}".format(dominance_valueusd)  + " B  "
-		text11 = str(dominance_name) + " locked: " + str(currency)
+		currency = "${:,.1f}".format(dominance_valueusd)
+		text11 = str(dominance_name) + " locked: " + str(currency)  + " B  "
 		down_label = Label(text=(text10 + '\n' + text11),anchor=NW, justify=LEFT,font=('Helvetica',20), bg='black', fg='white')
 		down_label.grid(row=13, column=1, sticky=W)
 
@@ -110,7 +118,8 @@ class ETHTicker:
 		text98 = str(errormessage)
 		down_label = Label(text=(text98),anchor=NW, justify=LEFT,font=('Helvetica',14), bg='black', fg='red')
 		down_label.grid(row=17, column=1, sticky=W)
-	
+		errormessage = ""
+
 		now = datetime.datetime.now()
 		text99 = "Current time: " + str(now)
 		down_label = Label(text=(text99),anchor=NW, justify=LEFT,font=('Helvetica',12), bg='black', fg='white')
@@ -126,25 +135,27 @@ def hwg():
 	global priceeth
 	global priceeth1hrchange
 	global priceeth24hrchange
-	global priceyfi24hrchange
-	global priceuni24hrchange
+	global coin1price24hrchange
+	global coin2price24hrchange
+	global coin1symbol
+	global coin2symbol
 	global marketcapeth
 	global marketcap24h
-	global priceyfi
-	global priceuni
+	global coin1price
+	global coin2price
 	global market_dominance_percentage
 	global average_gasfee
 	global defilockedusd
 	global dominance_name
 	global dominance_valueusd
-	global errormessage
 	global TVLBTC
 	global LNDBTC
 	global status
+	global errormessage
 	global average_block_time
 	global average_wait_time
-	global priceyfi1hrchange
-	global priceuni1hrchange
+	global coin1price1hrchange
+	global coin2price1hrchange
 	global defi_market_cap
 
 	defi_market_cap = 0
@@ -193,6 +204,7 @@ def hwg():
 		status = urltest.status_code
 		if status == 429:
 			print("Error DefiPulse. Wrong or expired API key")
+			errormessage = "Error DefiPulse. Wrong or expired API key"
 			raise
 		elif status == 200:
 			marketdata=requests.get(defi_pulse_url).json()
@@ -211,7 +223,7 @@ def hwg():
 
 	try:
 #	https://docs.ethgasstation.info/gas-price
-		status = 0
+		status = 1
 		ethgas_url = 'https://ethgasstation.info/api/ethgasAPI.json?'
 		urltest = requests.get(ethgas_url)
 		status = urltest.status_code
@@ -253,34 +265,40 @@ def hwg():
 		priceeth24hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_24h'])
 		marketcapeth = float(loads(coingecko_api_request)['market_data']['market_cap']['usd'])
 		priceeth = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
-		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/yearn-finance').read()	
-		priceyfi = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
-		priceyfi24hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_24h'])
-		priceyfi1hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_1h_in_currency']['usd'])
-		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/uniswap').read()	
-		priceuni = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
-		priceuni1hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_1h_in_currency']['usd'])
-		priceuni24hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_24h'])
+		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/'+ ETHspecialcoin1).read()	
+		coin1price = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
+		coin1symbol= str(loads(coingecko_api_request)['symbol'])
+		coin1price24hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_24h'])
+		coin1price1hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_1h_in_currency']['usd'])
+		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/coins/' + ETHspecialcoin2).read()	
+		coin2price = float(loads(coingecko_api_request)['market_data']['current_price']['usd'])
+		coin2symbol= str(loads(coingecko_api_request)['symbol'])
+		coin2price1hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_1h_in_currency']['usd'])
+		coin2price24hrchange = float(loads(coingecko_api_request)['market_data']['price_change_percentage_24h'])
 
 		priceeth24hrchange = priceeth24hrchange / 100
-		priceuni24hrchange = priceuni24hrchange / 100
-		priceyfi24hrchange = priceyfi24hrchange / 100
+		coin2price24hrchange = coin2price24hrchange / 100
+		coin1price24hrchange = coin1price24hrchange / 100
 		priceeth1hrchange = priceeth1hrchange / 100
-		priceuni1hrchange = priceuni1hrchange / 100
-		priceyfi1hrchange = priceyfi1hrchange / 100
+		coin2price1hrchange = coin2price1hrchange / 100
+		coin1price1hrchange = coin1price1hrchange / 100
+		marketcapeth = marketcapeth / 1000000000
 		print(priceeth)
 
 	except:
-		print("Error reading Coingecko")
+		errormessage = "Error reading Coingecko "
+		print(errormessage)
 		time.sleep(10)
 		hwg()
 	
 	try:
 		coingecko_api_request = urlopen('https://api.coingecko.com/api/v3/global/decentralized_finance_defi').read()	
 		defi_market_cap = float(loads(coingecko_api_request)['data']['defi_market_cap'])
+		defi_market_cap = defi_market_cap / 1000000000
 
 	except:
-		print("Error reading Coingecko Defi")
+		errormessage = "Error reading Coingecko Defi" 
+		print(errormessage)
 		time.sleep(10)
 		hwg()
 
@@ -293,7 +311,7 @@ def internet_on(url='http://www.google.com/', timeout=5):
 	return False
 
 
-
+exec(open(r"variables").read())
 errormessage=""
 LNDBTC=0
 TVLBTC=0
