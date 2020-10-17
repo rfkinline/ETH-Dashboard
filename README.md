@@ -54,6 +54,3 @@ Start the program with "python3" and not "python"  ("python3 ETHDashboard.py")
 The screen blanking feature can be disabled / enabled with:
 > sudo raspi-config
 Advanced menu A6
-
-## Install Feedparser
- > sudo pip3 install feedparser
