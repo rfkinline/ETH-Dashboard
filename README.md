@@ -49,3 +49,8 @@ To stop the program, click on the ETH logo.
 
 ## Python
 Start the program with "python3" and not "python"  ("python3 ETHDashboard.py")
+
+## Sleep mode disable
+The screen blanking feature can be disabled / enabled with:
+> sudo raspi-config
+Advanced menu A6
